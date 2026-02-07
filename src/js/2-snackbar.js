@@ -19,7 +19,7 @@ function handelSubmit(event) {
   promis
     .then(value => {
       iziToast.success({
-        message: `✅ Fulfilled promis in ${value}ms`,
+        message: `✅ Fulfilled promise in ${value}ms`,
         position: 'topRight',
       });
     })

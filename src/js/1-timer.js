@@ -25,10 +25,10 @@ const options = {
         title: 'Error',
         message: 'Please choose a date in the future',
       });
+      userSelectedDate = null;
       return;
     }
     btn.disabled = false;
-
     userSelectedDate = userDate;
   },
 };
@@ -48,8 +48,8 @@ function convertMs(ms) {
 }
 btn.addEventListener('click', () => {
   btn.disabled = true;
+  input.disabled = true;
   const timerId = setInterval(() => {
-    input.disabled = true;
     const now = new Date();
     const diff = userSelectedDate - now;
     const time = convertMs(diff);
@@ -57,18 +57,23 @@ btn.addEventListener('click', () => {
       input.disabled = false;
       clearInterval(timerId);
       updateTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      iziToast.success({
+        position: 'topRight',
+        title: 'Timer finished',
+        message: 'Countdown completed!',
+      });
       return;
     }
     updateTime(time);
   }, 1000);
 });
 function updateTime({ days, hours, minutes, seconds }) {
-  refs.days.textContent = addLeadinfZero(days);
-  refs.hours.textContent = addLeadinfZero(hours);
-  refs.minutes.textContent = addLeadinfZero(minutes);
-  refs.seconds.textContent = addLeadinfZero(seconds);
+  refs.days.textContent = addLeadinZero(days);
+  refs.hours.textContent = addLeadinZero(hours);
+  refs.minutes.textContent = addLeadinZero(minutes);
+  refs.seconds.textContent = addLeadinZero(seconds);
 }
 
-function addLeadinfZero(value) {
+function addLeadinZero(value) {
   return String(value).padStart(2, '0');
 }
