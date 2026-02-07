@@ -5,27 +5,27 @@ form.addEventListener('submit', handelSubmit);
 function handelSubmit(event) {
   event.preventDefault();
   const elements = event.target.elements;
-  const inputDelay = elements.delay.value;
+  const inputDelay = Number(elements.delay.value);
   const radioBtn = elements.state.value;
-  const promise = new Promise((resolve, reject) => {
+  const promis = new Promise((resolve, reject) => {
     setTimeout(() => {
       if (radioBtn === 'fulfilled') {
-        resolve(`Fulfilled promis in ${inputDelay}ms`);
+        resolve(inputDelay);
       } else {
-        reject(`Rejected promise in ${inputDelay}ms`);
+        reject(inputDelay);
       }
-    }, Number(inputDelay));
+    }, inputDelay);
   });
-  promise
+  promis
     .then(value => {
       iziToast.success({
-        message: `${value}`,
+        message: `✅ Fulfilled promis in ${value}ms`,
         position: 'topRight',
       });
     })
     .catch(error => {
       iziToast.error({
-        message: `${error}`,
+        message: `❌ Rejected promise in ${error}ms`,
         position: 'topRight',
       });
     });

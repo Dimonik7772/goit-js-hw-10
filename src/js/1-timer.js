@@ -19,8 +19,7 @@ const options = {
   onClose(selectedDates) {
     const userDate = selectedDates[0];
     const now = new Date();
-    if (userDate < now) {
-      btn.disabled = true;
+    if (userDate <= now) {
       iziToast.error({
         position: 'topRight',
         title: 'Error',
@@ -48,14 +47,13 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 btn.addEventListener('click', () => {
+  btn.disabled = true;
   const timerId = setInterval(() => {
-    btn.disabled = true;
     input.disabled = true;
     const now = new Date();
     const diff = userSelectedDate - now;
     const time = convertMs(diff);
     if (diff <= 0) {
-      btn.disabled = false;
       input.disabled = false;
       clearInterval(timerId);
       updateTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
